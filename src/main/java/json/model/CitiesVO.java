@@ -1,0 +1,14 @@
+package json.model;
+
+import lombok.Data;
+
+import java.util.List;
+
+/**
+ * Created by wangmo on 16/10/14.
+ */
+@Data
+public class CitiesVO {
+    private List<City> cities;
+}
+
