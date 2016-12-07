@@ -646,29 +646,7 @@ public class Solution {
         if (j < version2.length()) {
             if (!version2.substring(j).matches("(([0]+\\.)|([0]+))*")) return -1;
         }
-//        BigDecimal bigDecimal = new BigDecimal("123");
-//        bigDecimal.intValue()
         return 0;
-
-//        if (version1.equals(version2)) return 0;
-//        String[] vss1 = version1.split("\\.");
-//        String[] vss2 = version2.split("\\.");
-//        int minlen = vss1.length > vss2.length ? vss2.length : vss1.length;
-//        for (int i=0; i<minlen; i++) {
-//            BigDecimal s1 = new BigDecimal(vss1[i]);
-//            BigDecimal s2 = new BigDecimal(vss2[i]);
-//            if (s1.compareTo(s2) != 0) return s1.compareTo(s2);
-//        }
-//        if (vss1.length > vss2.length) {
-//            for (int i = minlen; i<vss1.length; i++){
-//                if (!vss1[i].matches("[0]*")) return 1;
-//            }
-//        }
-//        if (vss2.length > vss1.length) {
-//            for (int i = minlen; i<vss2.length; i++){
-//                if (!vss2[i].matches("[0]*")) return -1;
-//            }
-//        }
     }
 
     public static void main(String[] args) throws Exception{

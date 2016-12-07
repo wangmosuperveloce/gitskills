@@ -2,11 +2,9 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import enhance.SupplementaryHouseFund;
 import enhance.SupplementaryInsurances;
 import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddressList;
+import org.apache.poi.xssf.usermodel.*;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -26,39 +24,79 @@ public class POI
 
     {
 
-        String[] list = {"东软", "华信", "SAP", "海辉"};
-
+        String[] list = {"不限(xiaoganshebao)",
+                "不限(ezhoushebao)",
+                "城镇(chongqingshebao)",
+                "不限(hezeshebao)",
+                "农村三险(tianjinshebaonongcun)",
+                "农村三险(tianjinshebaonongcun)",
+                "农村三险(tianjinshebaonongcun)",
+                "农村三险(tianjinshebaonongcun)",
+                "农村三险(tianjinshebaonongcun)",
+                "农村三险(tianjinshebaonongcun)",
+                "农村三险(tianjinshebaonongcun)",
+                "农村三险(tianjinshebaonongcun)",
+                "农村三险(tianjinshebaonongcun)",
+                "上海五险(shanghaiwuxian)",
+                "不限(jinanshebao)",
+                "城镇(beijingshebao)",
+                "不限(weihaishebao)",
+                "不限(wuhanshebao)",
+                "农村(beijingshebaonongcun)",
+                "不限(puyangshebao)",
+                "不限(yantaishebao)",
+                "不限(quanzhoushebao)"};
         new POI().createListBox(list);
 
         return;
 
     }
 
-    public void createListBox(String[] list)
+    public void createListBox(String[] dropdownlist)
 
     {
-        //文件初始化
-        HSSFWorkbook wb = new HSSFWorkbook();
-        HSSFSheet sheet = wb.createSheet("new sheet");
-        //在第一行第一个单元格，插入下拉框
-        HSSFRow row = sheet.createRow(0);
-        HSSFCell cell = row.createCell(0);
-        //普通写入操作
-        cell.setCellValue("请选择");//这是实验
-        //生成下拉列表
-        //只对（0，0）单元格有效
-        CellRangeAddressList regions = new CellRangeAddressList(0, 9, 0, 0);
-        //生成下拉框内容
-        DVConstraint constraint = DVConstraint.createExplicitListConstraint(list);
-        //绑定下拉框和作用区域
-        HSSFDataValidation data_validation = new HSSFDataValidation(regions, constraint);
-        //对sheet页生效
-        sheet.addValidationData(data_validation);
-        //写入文件
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFSheet sheet = workbook.createSheet("下拉列表测试");
+        XSSFSheet hidden = workbook.createSheet("hidden");
+        for (int i = 0; i < dropdownlist.length; i++) {
+            String name = dropdownlist[i];
+            XSSFRow row = hidden.createRow(i);
+            XSSFCell cell = row.createCell(0);
+
+
+//            CellStyle style = workbook.createCellStyle();
+//            style.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+//            style.setFillPattern(CellStyle.SOLID_FOREGROUND);
+
+            XSSFCellStyle style = cell.getCellStyle();
+            XSSFFont font = style.getFont();
+            XSSFColor colour = font.getXSSFColor();
+            font.setColor(IndexedColors.RED.getIndex());
+            style.setFont(font);
+            cell.setCellStyle(style);
+
+
+
+
+
+            cell.setCellValue(name);
+        }
+        XSSFName name = workbook.createName();
+        name.setNameName("hidden");
+        name.setRefersToFormula("hidden!$A$1:$A$" + dropdownlist.length);
+        XSSFDataValidationHelper dvHelper = new XSSFDataValidationHelper(sheet);
+        XSSFDataValidationConstraint dvConstraint = (XSSFDataValidationConstraint) dvHelper.createFormulaListConstraint("hidden");
+        CellRangeAddressList addressList = new CellRangeAddressList(0, 0, 0, 0);
+        XSSFDataValidation validation = (XSSFDataValidation) dvHelper.createValidation(dvConstraint, addressList);
+        validation.setSuppressDropDownArrow(true);
+        validation.setShowErrorBox(true);
+        sheet.addValidationData(validation);
+//        workbook.setSheetHidden(1, true);
+
         FileOutputStream fileOut;
         try {
-            fileOut = new FileOutputStream("workbook.xls");
-            wb.write(fileOut);
+            fileOut = new FileOutputStream("/Users/haizhi/Desktop/workbook.xls");
+            workbook.write(fileOut);
             fileOut.close();
         } catch (Exception e) {
             // TODO Auto-generated catch block
@@ -74,29 +112,46 @@ public class POI
 
 
 
-//    public static void dropDownList42007(String dataSource, String filePath)
-//            throws Exception {
-//        XSSFWorkbook workbook = new XSSFWorkbook();
-//        XSSFSheet sheet = workbook.createSheet("下拉列表测试");
-//        String[] datas = dataSource.split("\\,");
+    public static void dropDownList42007(String[] dropdownlist, String filePath)
+            throws Exception {
+        XSSFWorkbook workbook = new XSSFWorkbook();
+
+        XSSFSheet sheet = workbook.createSheet("下拉列表测试");
+        XSSFSheet hidden = workbook.createSheet("hidden");
+
+        for (int i = 0; i < dropdownlist.length; i++) {
+            String name = dropdownlist[i];
+            XSSFRow row = hidden.createRow(i);
+            XSSFCell cell = row.createCell(0);
+            cell.setCellValue(name);
+        }
+
+        XSSFDataValidationHelper dvHelper = new XSSFDataValidationHelper(sheet);
+        Name namedCell = workbook.createName();
+        namedCell.setNameName("hidden");
+        namedCell.setRefersToFormula("hidden!$A$1:$A$" + dropdownlist.length);
+        DVConstraint constraint = DVConstraint.createFormulaListConstraint("hidden");
+        CellRangeAddressList addressList = new CellRangeAddressList(0, 0, 0, 0);
+        XSSFDataValidation validation = (XSSFDataValidation) dvHelper.createValidation(constraint, addressList);
+        workbook.setSheetHidden(1, true);
+        sheet.addValidationData(validation);
+
+
 //        XSSFDataValidationHelper dvHelper = new XSSFDataValidationHelper(sheet);
 //        XSSFDataValidationConstraint dvConstraint = (XSSFDataValidationConstraint) dvHelper
-//                .createExplicitListConstraint(datas);
+//                .createExplicitListConstraint(dropdownlist);
 //        CellRangeAddressList addressList = null;
 //        XSSFDataValidation validation = null;
 //        for (int i = 0; i < 100; i++) {
 //            addressList = new CellRangeAddressList(i, i, 0, 0);
 //            validation = (XSSFDataValidation) dvHelper.createValidation(
 //                    dvConstraint, addressList);
-//            // 07默认setSuppressDropDownArrow(true);
-//            // validation.setSuppressDropDownArrow(true);
-//            // validation.setShowErrorBox(true);
 //            sheet.addValidationData(validation);
 //        }
-//        FileOutputStream stream = new FileOutputStream(filePath);
-//        workbook.write(stream);
-//        stream.close();
-//        addressList = null;
-//        validation = null;
-//    }
+        FileOutputStream stream = new FileOutputStream(filePath);
+        workbook.write(stream);
+        stream.close();
+        addressList = null;
+        validation = null;
+    }
 }
