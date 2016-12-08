@@ -58,15 +58,13 @@ public class POI
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("下拉列表测试");
         XSSFSheet hidden = workbook.createSheet("hidden");
+
+        CreationHelper factory = workbook.getCreationHelper();
         for (int i = 0; i < dropdownlist.length; i++) {
             String name = dropdownlist[i];
             XSSFRow row = hidden.createRow(i);
             XSSFCell cell = row.createCell(0);
 
-
-//            CellStyle style = workbook.createCellStyle();
-//            style.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
-//            style.setFillPattern(CellStyle.SOLID_FOREGROUND);
 
             XSSFCellStyle style = cell.getCellStyle();
             XSSFFont font = style.getFont();
@@ -75,7 +73,12 @@ public class POI
             style.setFont(font);
             cell.setCellStyle(style);
 
-
+            Drawing drawing = sheet.createDrawingPatriarch();
+            ClientAnchor anchor = factory.createClientAnchor();
+            Comment comment = drawing.createCellComment(anchor);
+            RichTextString str = factory.createRichTextString("Hello, World!");
+            comment.setString(str);
+            cell.setCellComment(comment);
 
 
 
@@ -92,7 +95,10 @@ public class POI
         validation.setShowErrorBox(true);
         sheet.addValidationData(validation);
 //        workbook.setSheetHidden(1, true);
-
+        hidden.autoSizeColumn((short)0); //调整第一列宽度
+//        hidden.autoSizeColumn((short)1); //调整第二列宽度
+//        hidden.autoSizeColumn((short)2); //调整第三列宽度
+//        hidden.autoSizeColumn((short)3); //调整第四列宽度
         FileOutputStream fileOut;
         try {
             fileOut = new FileOutputStream("/Users/haizhi/Desktop/workbook.xls");
@@ -154,4 +160,7 @@ public class POI
         addressList = null;
         validation = null;
     }
+
+
+
 }
