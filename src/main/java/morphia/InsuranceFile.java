@@ -1,6 +1,7 @@
 package morphia;
 
 import lombok.Data;
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.*;
 
 import java.math.BigDecimal;
@@ -15,11 +16,16 @@ import java.util.Map;
 @Data
 public class InsuranceFile {
 
+    @Id
+    private ObjectId id;
+
     @Indexed
     private String mobile;
 
     @Transient
     private Long tenantId;
+
+    private Long userId;
 
     @Transient
     private Integer time;

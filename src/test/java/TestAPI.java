@@ -3,6 +3,7 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddressList;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.*;
+import org.jooq.util.derby.sys.Sys;
 import org.junit.Test;
 
 import java.io.File;
@@ -24,9 +25,14 @@ public class TestAPI {
 
     @Test
     public void trySomething() {
-        BigDecimal b = new BigDecimal("1.235999999999999999");
-        System.out.println(b);
-        System.out.println(b.setScale(2, BigDecimal.ROUND_HALF_UP));
+        top:
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (i == 1)  continue top;
+                System.out.print(i+ j + " ");
+            }
+            System.out.println();
+        }
     }
 
     @Test
@@ -49,6 +55,11 @@ public class TestAPI {
         XSSFCellStyle customerColumnStyle = getImportColumnCellStyle(workbook);
         XSSFCellStyle commentDateStyle = getImportDateCellStyle(workbook);
 
+        new ExportExcelColumnItem("客户名称（必填）", "客户名称：必填，最多100个字符", XSSFCell.CELL_TYPE_STRING, 20 * 256, customerTitleStyle, customerColumnStyle);
+
+        fillImportTitle(null,null,1,null,1);
+
+        fillRow(null,0,0,null,0,null);
     }
 
     @Test

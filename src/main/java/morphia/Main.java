@@ -2,9 +2,11 @@ package morphia;
 
 import com.mongodb.*;
 import org.apache.commons.beanutils.BeanUtils;
+import org.bson.types.ObjectId;
 import org.jooq.util.derby.sys.Sys;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
+import org.mongodb.morphia.aggregation.Projection;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 
@@ -13,6 +15,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
+import static org.mongodb.morphia.aggregation.Projection.projection;
 
 /**
  * Created by wangmo on 16/9/24.
@@ -40,14 +44,69 @@ public class Main {
         return bean;
     }
     public static void main(String[] args) throws Exception{
-
-//        store(generate(100099));
-//        datastore.save()
-//        WriteConcern.W2;
-        InsuranceMonthFile monthFile = monthFile(1010L, 201601, 9999, 10005, "FEL999");
-        System.out.println(monthFile.getFiles().size());
-        System.out.println(monthFile.getFiles().get(0));
-        System.out.println(monthFile.getFiles().get(monthFile.getFiles().size()-1));
+//        List<InsuranceFile> files = generate(99999);
+//        datastore.save(files);
+//        store(files);
+//        List<InsuranceMonthFile> monthFileList = datastore.createQuery(InsuranceMonthFile.class).asList();
+//        System.out.println(monthFileList.get(0).getFiles().size());
+//        datastore.createQuery(InsuranceMonthFile.class);
+//        List<InsuranceFile> files = datastore.createQuery(InsuranceFile.class).field("userId").equal((long) 2).asList();
+//        System.out.println(files);
+        Iterator<InsuranceFile> aggregate = datastore.createAggregation(InsuranceMonthFile.class)
+                .match(datastore.createQuery(InsuranceMonthFile.class).field("tenantId").equal(1009L))
+                .project(Projection.projection("_id").suppress(), Projection.projection("files"))
+                .unwind("files")
+                .project(
+                        projection("_id").suppress(),
+                        projection("mobile", "files.mobile"),
+                        projection("name", "files.name"),
+                        projection("userId", "files.userId"),
+                        projection("joinAt", "files.userId"),
+                        projection("nationalId", "files.nationalId"),
+                        projection("insCity", "files.insCity"),
+                        projection("insBase", "files.insBase"),
+                        projection("insOrg", "files.insOrg"),
+                        projection("insEmp", "files.insEmp"),
+                        projection("hfCity", "files.hfCity"),
+                        projection("hfBase", "files.hfBase"),
+                        projection("hfOrg", "files.hfOrg"),
+                        projection("hfEmp", "files.hfEmp"),
+                        projection("orgEnd", "files.orgEnd"),
+                        projection("empEnd", "files.empEnd"),
+                        projection("orgMed", "files.orgMed"),
+                        projection("empMed", "files.empMed"),
+                        projection("orgUne", "files.orgUne"),
+                        projection("empUne", "files.empUne"),
+                        projection("orgInj", "files.orgInj"),
+                        projection("empInj", "files.empInj"),
+                        projection("orgMat", "files.orgMat"),
+                        projection("empMat", "files.empMat"),
+                        projection("orgIll", "files.orgIll"),
+                        projection("empIll", "files.empIll"),
+                        projection("suppInsOrg", "files.suppInsOrg"),
+                        projection("suppInsEmp", "files.suppInsEmp"),
+                        projection("suppHfOrg", "files.suppHfOrg"),
+                        projection("suppHfEmp", "files.suppHfEmp"),
+                        projection("orgSuppEnd", "files.orgSuppEnd"),
+                        projection("empSuppEnd", "files.empSuppEnd"),
+                        projection("orgSuppMed", "files.orgSuppMed"),
+                        projection("empSuppMed", "files.empSuppMed"),
+                        projection("orgSuppUne", "files.orgSuppUne"),
+                        projection("empSuppUne", "files.empSuppUne"),
+                        projection("orgSuppInj", "files.orgSuppInj"),
+                        projection("empSuppInj", "files.empSuppInj"),
+                        projection("orgSuppMat", "files.orgSuppMat"),
+                        projection("empSuppMat", "files.empSuppMat"),
+                        projection("orgSuppIll", "files.orgSuppIll"),
+                        projection("empSuppIll", "files.empSuppIll")
+                )
+                .match(datastore.createQuery(InsuranceFile.class).field("userId").in(new ArrayList<>()))
+                .skip(0)
+                .limit(10)
+                .aggregate(InsuranceFile.class);
+        while (aggregate.hasNext()) {
+            System.out.println(aggregate.next());
+        }
     }
 
 
@@ -224,6 +283,7 @@ public class Main {
                     .field("time").equal(time)
                     .field("deleted").equal(-1)
             );
+            e.printStackTrace();
             throw new RuntimeException("存储失败！！");
         }
     }
@@ -278,9 +338,11 @@ public class Main {
         List<InsuranceFile> insuranceFileList = new ArrayList<>(n);
         for (int i = 0; i < n; i++) {
             InsuranceFile file = new InsuranceFile();
+//            file.setId(new ObjectId());
             file.setName("NOME_APFEL" + i);
             file.setTenantId(1000L+n%99);
             file.setTime(201601);
+            file.setUserId((long) i);
             file.setMobile((13610000000L + i - n * 10000) + "");
             file.setInsBase(new BigDecimal(532000).toString());
             file.setInsCity("北京");
@@ -323,7 +385,6 @@ public class Main {
         return insuranceFileList;
     }
 
-
     public static void add() {
         for (int n =0 ;n < 100; n++) {
             InsuranceMonthFile monthFile = new InsuranceMonthFile();
@@ -334,6 +395,7 @@ public class Main {
                 InsuranceFile file = new InsuranceFile();
                 file.setName("NOME" + i);
                 file.setTenantId(1000L+n);
+                file.setUserId((long) i);
                 file.setTime(201601);
                 file.setMobile((13610000000L + i - n * 10000) + "");
                 file.setInsBase(new BigDecimal(5000).toString());

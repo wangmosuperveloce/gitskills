@@ -4,9 +4,6 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 
 import java.util.List;
 
-/**
- * Created by hanjunnan on 16/3/3.
- */
 @Data
 public class ExportExcelColumnItem {
 
