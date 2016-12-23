@@ -1,6 +1,9 @@
 package algorithms;
 
+import sun.jvm.hotspot.ui.action.FindAction;
+
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 /**
  * Created by wangmo on 16/9/18.
@@ -47,23 +50,63 @@ public class Algorithms {
         return 0;
     }
 
+    public static boolean Find(int target, int [][] array) {
+        if (array == null || array.length == 0 || array[0].length == 0) return false;
+        int row = array.length;
+        int col = array[0].length;
+        int lo = 0;
+        int hi = col - 1;
+        int mid = 0;
+        for (int i = 0; i < row; i++) {
+            while (lo <= hi) {
+                mid = (lo + hi) / 2;
+                if (target == array[i][mid]) {
+                    return true;
+                } else if (target > array[i][mid]) {
+                    lo = mid + 1;
+                } else {
+                    hi = mid - 1;
+                }
+            }
+            if (array[i][mid] > target) {
+                mid = mid - 1;
+                if (mid < 0) return false;
+            }
+            lo = 0;
+            hi = mid;
+        }
+        return false;
+    }
 
+    public String replaceSpace(StringBuffer str) {
+        StringBuilder result = new StringBuilder();
+        for (char c : str.toString().toCharArray()) {
+            if (c == ' ') {
+                result.append("%20");
+            } else {
+                result.append(c);
+            }
+        }
+        return result.toString();
+    }
+
+    public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
+        if (listNode == null) return new ArrayList<>();
+        ArrayList<Integer> values = new ArrayList<>();
+        while (listNode != null) {
+            values.add(listNode.val);
+            listNode = listNode.next;
+        }
+        ArrayList<Integer> result = new ArrayList<>(values.size());
+        for (int i = values.size()-1; i >= 0; i--) {
+            result.add(values.get(i));
+        }
+        return result;
+    }
 
     public static void main(String []args){
-        String[] array = new String[]{"a","c","b","e","d"};
-        quicksort(array, 0, 4);
-        for(String s:array){
-            System.out.println(s);
-        }
-        Integer[] arr2 = new Integer[]{57, 68, 59, 52, 72, 28, 96, 33, 24};
-        quicksort(arr2, 0, arr2.length-1);
-        for(Integer i:arr2){
-            System.out.println(i);
-        }
-
-        BigDecimal decimal = new BigDecimal("0.13");
-        decimal = decimal.divide(new BigDecimal("100"));
-        System.out.println(decimal);
+        int [][]array = new int[][]{{1,2,8,9},{2,4,9,12},{4,7,10,13},{6,8,11,15}};
+        System.out.println(Find(0,array));
     }
 
 }

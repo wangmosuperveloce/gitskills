@@ -25,13 +25,25 @@ public class TestAPI {
 
     @Test
     public void trySomething() {
-        top:
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (i == 1)  continue top;
-                System.out.print(i+ j + " ");
-            }
-            System.out.println();
+        try {
+            throw new IllegalStateException("nishishenmeyichang");
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private int abc () {
+        int x = 0;
+        try {
+            x = 1;
+            if (x == 1) throw new RuntimeException();
+            return x;
+        } catch (Exception e) {
+            x = 2;
+            return x;
+        } finally {
+            x = 3;
         }
     }
 
