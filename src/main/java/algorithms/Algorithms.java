@@ -1,8 +1,5 @@
 package algorithms;
 
-import sun.jvm.hotspot.ui.action.FindAction;
-
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 /**

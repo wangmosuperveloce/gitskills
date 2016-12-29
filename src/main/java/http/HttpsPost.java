@@ -1,10 +1,7 @@
 package http;
 
 
-import com.sun.deploy.net.HttpResponse;
-import org.omg.DynamicAny.NameValuePair;
-import sun.net.www.http.*;
-
+import javax.net.ssl.*;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -13,16 +10,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.GeneralSecurityException;
 import java.security.KeyStore;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.KeyManagerFactory;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManagerFactory;
 
 public class HttpsPost {
     /**

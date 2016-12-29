@@ -14,87 +14,97 @@ package jooq.model;
 public class Tables {
 
 	/**
-	 * 薪酬模块 | 存储津贴适用的用户或部分 | 王默 | 2016-09-14 | 津贴设置页面，用户界面操作
+	 * 薪酬模块 | 存储津贴适用的用户或部分 | 邓刚&王默 | 2016-09-14 | 津贴设置页面，用户界面操作
 	 */
 	public static final jooq.model.tables.TAllowanceAdapted T_ALLOWANCE_ADAPTED = jooq.model.tables.TAllowanceAdapted.T_ALLOWANCE_ADAPTED;
 
 	/**
-	 * 薪酬模块 | 存储津贴方案 | 王默 | 2016-09-14 | 津贴设置页面，用户界面操作
+	 * 薪酬模块 | 存储津贴方案 | 邓刚&王默 | 2016-09-14 | 津贴设置页面，用户界面操作
 	 */
 	public static final jooq.model.tables.TAllowancePlan T_ALLOWANCE_PLAN = jooq.model.tables.TAllowancePlan.T_ALLOWANCE_PLAN;
 
 	/**
-	 * 薪酬模块 | 存储上传的考勤数据 | 王默 | 2016-09-14 | excel上传
+	 * 薪酬模块 | 存储上传的考勤数据 | 邓刚&王默 | 2016-09-14 | excel上传
 	 */
 	public static final jooq.model.tables.TAttendanceData T_ATTENDANCE_DATA = jooq.model.tables.TAttendanceData.T_ATTENDANCE_DATA;
 
 	/**
-	 * 薪酬模块 | 基础工资表，包括调薪历史 | 王默 | 2016-09-14 | 调薪页面，用户界面操作，输入
+	 * 薪酬模块 | 基础工资表，包括调薪历史 | 邓刚&王默 | 2016-09-14 | 调薪页面，用户界面操作，输入
 	 */
 	public static final jooq.model.tables.TBasicSalary T_BASIC_SALARY = jooq.model.tables.TBasicSalary.T_BASIC_SALARY;
 
 	/**
-	 * 薪酬模块 | 存储调薪记录 | 王默 | 2016-09-14 | 调薪页面，用户界面操作
+	 * 薪酬模块 | 存储调薪记录 | 邓刚&王默 | 2016-09-14 | 调薪页面，用户界面操作
 	 */
 	public static final jooq.model.tables.TBasicSalaryAdjustment T_BASIC_SALARY_ADJUSTMENT = jooq.model.tables.TBasicSalaryAdjustment.T_BASIC_SALARY_ADJUSTMENT;
 
 	/**
-	 * 薪酬模块 | 存储各个公司自己配置的基本工资项 | 王默 | 2016-09-14 | 工资设置页面，用户界面操作
+	 * 薪酬模块 | 存储各个公司自己配置的基本工资项 | 邓刚&王默 | 2016-09-14 | 工资设置页面，用户界面操作
 	 */
 	public static final jooq.model.tables.TBasicSalaryType T_BASIC_SALARY_TYPE = jooq.model.tables.TBasicSalaryType.T_BASIC_SALARY_TYPE;
 
 	/**
-	 * 薪酬模块 | 存储奖金数据表 | 王默 | 2016-09-14 | 个人薪酬详情页面，用户界面操作，输入
+	 * 薪酬模块 | 存储奖金数据表 | 邓刚&王默 | 2016-09-14 | 个人薪酬详情页面，用户界面操作，输入
 	 */
 	public static final jooq.model.tables.TBonus T_BONUS = jooq.model.tables.TBonus.T_BONUS;
 
 	/**
-	 * 薪酬模块 | 记录分摊计税使用 | 王默 | 2016-09-14 | 奖金设置页面，用户界面操作
-	 */
-	public static final jooq.model.tables.TBonusApportioned T_BONUS_APPORTIONED = jooq.model.tables.TBonusApportioned.T_BONUS_APPORTIONED;
-
-	/**
-	 * 薪酬模块 | 存储各公司自定义的奖金类型 | 王默 | 2016-09-14 | 奖金设置页面，用户界面操作
+	 * 薪酬模块 | 存储各公司自定义的奖金类型 | 邓刚&王默 | 2016-09-14 | 奖金设置页面，用户界面操作
 	 */
 	public static final jooq.model.tables.TBonusType T_BONUS_TYPE = jooq.model.tables.TBonusType.T_BONUS_TYPE;
 
 	/**
-	 * 薪酬模块 | 存储归档历史 | 王默 | 2016-09-14 | 历史归档页面，用户界面操作
+	 * 薪酬模块 | 记录当前最早未归档薪酬 | 邓刚&王默 | 2016-09-26 | 后台逻辑生成
 	 */
-	public static final jooq.model.tables.TFilingHistory T_FILING_HISTORY = jooq.model.tables.TFilingHistory.T_FILING_HISTORY;
+	public static final jooq.model.tables.TCurrentSalary T_CURRENT_SALARY = jooq.model.tables.TCurrentSalary.T_CURRENT_SALARY;
 
 	/**
-	 * 薪酬模块 | 保险公积金配置 | 王默 | 2016-09-14 | 社保详情页面，用户界面操作
+	 * 薪酬模块 | 公积金方案 | 邓刚&王默 | 2016-10-11 | 公积金方案配置页
+	 */
+	public static final jooq.model.tables.THousefundPlan T_HOUSEFUND_PLAN = jooq.model.tables.THousefundPlan.T_HOUSEFUND_PLAN;
+
+	/**
+	 * 薪酬模块 | 保险公积金配置 | 邓刚&王默 | 2016-09-14 | 社保详情页面，用户界面操作
 	 */
 	public static final jooq.model.tables.TInsurancesHousefundConfig T_INSURANCES_HOUSEFUND_CONFIG = jooq.model.tables.TInsurancesHousefundConfig.T_INSURANCES_HOUSEFUND_CONFIG;
 
 	/**
-	 * 薪酬模块 | 社保公积金数据表，只记录归档数据 | 王默 | 2016-09-14 | 社保详情页面，和历史归档页面，根据社保公积金配置合成
+	 * 薪酬模块 | 社保方案 | 邓刚&王默 | 2016-10-11 | 社保方案配置页
 	 */
-	public static final jooq.model.tables.TInsurancesHousefundFiling T_INSURANCES_HOUSEFUND_FILING = jooq.model.tables.TInsurancesHousefundFiling.T_INSURANCES_HOUSEFUND_FILING;
+	public static final jooq.model.tables.TInsurancesPlan T_INSURANCES_PLAN = jooq.model.tables.TInsurancesPlan.T_INSURANCES_PLAN;
 
 	/**
-	 * 薪酬模块 | 记录位置和该位置社保公积金数据 | 王默 | 2016-09-14 | 后台系统管理员输入
+	 * The table oa_salary.t_insurance_change_record
+	 */
+	public static final jooq.model.tables.TInsuranceChangeRecord T_INSURANCE_CHANGE_RECORD = jooq.model.tables.TInsuranceChangeRecord.T_INSURANCE_CHANGE_RECORD;
+
+	/**
+	 * 薪酬模块 | 存储归档历史 | 邓刚&王默 | 2016-09-14 | 历史归档页面，用户界面操作
+	 */
+	public static final jooq.model.tables.TInsuranceFilingHistory T_INSURANCE_FILING_HISTORY = jooq.model.tables.TInsuranceFilingHistory.T_INSURANCE_FILING_HISTORY;
+
+	/**
+	 * @depreciated 薪酬模块 | 记录位置和该位置社保公积金数据 | 邓刚&王默 | 2016-09-14 | 后台系统管理员输入  
 	 */
 	public static final jooq.model.tables.TLocation T_LOCATION = jooq.model.tables.TLocation.T_LOCATION;
 
 	/**
-	 * 薪酬模块 | 计薪设置 | 王默 | 2016-09-14 | 计薪设置页面，用户界面操作
+	 * 薪酬模块 | 计薪设置 | 邓刚&王默 | 2016-09-14 | 计薪设置页面，用户界面操作
 	 */
 	public static final jooq.model.tables.TSalaryCalculationConfig T_SALARY_CALCULATION_CONFIG = jooq.model.tables.TSalaryCalculationConfig.T_SALARY_CALCULATION_CONFIG;
 
 	/**
-	 * 薪酬模块 | 个人薪酬计算中一些动态变化的东西 | 王默 | 2016-09-14 | 个人薪酬详情页面，用户界面操作
+	 * 薪酬模块 | 个人薪酬计算中一些动态变化的东西 | 邓刚&王默 | 2016-09-14 | 个人薪酬详情页面，用户界面操作
 	 */
 	public static final jooq.model.tables.TSalaryConfig T_SALARY_CONFIG = jooq.model.tables.TSalaryConfig.T_SALARY_CONFIG;
 
 	/**
-	 * 薪酬模块 | 公积金补缴表 | 王默 | 2016-09-14 | 社保详情页面，用户界面操作
+	 * 薪酬模块 | 公积金补缴表 | 邓刚&王默 | 2016-09-14 | 社保详情页面，用户界面操作
 	 */
 	public static final jooq.model.tables.TSupplementaryHousefund T_SUPPLEMENTARY_HOUSEFUND = jooq.model.tables.TSupplementaryHousefund.T_SUPPLEMENTARY_HOUSEFUND;
 
 	/**
-	 * 薪酬模块 | 社保补缴表 | 王默 | 2016-09-14 | 社保详情页面，用户界面操作
+	 * 薪酬模块 | 社保补缴表 | 邓刚&王默 | 2016-09-14 | 社保详情页面，用户界面操作
 	 */
 	public static final jooq.model.tables.TSupplementaryInsurances T_SUPPLEMENTARY_INSURANCES = jooq.model.tables.TSupplementaryInsurances.T_SUPPLEMENTARY_INSURANCES;
 }

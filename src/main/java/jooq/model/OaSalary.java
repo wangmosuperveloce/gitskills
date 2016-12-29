@@ -11,7 +11,7 @@ package jooq.model;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class OaSalary extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -1399920916;
+	private static final long serialVersionUID = 1186711727;
 
 	/**
 	 * The singleton instance of <code>oa_salary</code>
@@ -41,11 +41,13 @@ public class OaSalary extends org.jooq.impl.SchemaImpl {
 			jooq.model.tables.TBasicSalaryAdjustment.T_BASIC_SALARY_ADJUSTMENT,
 			jooq.model.tables.TBasicSalaryType.T_BASIC_SALARY_TYPE,
 			jooq.model.tables.TBonus.T_BONUS,
-			jooq.model.tables.TBonusApportioned.T_BONUS_APPORTIONED,
 			jooq.model.tables.TBonusType.T_BONUS_TYPE,
-			jooq.model.tables.TFilingHistory.T_FILING_HISTORY,
+			jooq.model.tables.TCurrentSalary.T_CURRENT_SALARY,
+			jooq.model.tables.THousefundPlan.T_HOUSEFUND_PLAN,
 			jooq.model.tables.TInsurancesHousefundConfig.T_INSURANCES_HOUSEFUND_CONFIG,
-			jooq.model.tables.TInsurancesHousefundFiling.T_INSURANCES_HOUSEFUND_FILING,
+			jooq.model.tables.TInsurancesPlan.T_INSURANCES_PLAN,
+			jooq.model.tables.TInsuranceChangeRecord.T_INSURANCE_CHANGE_RECORD,
+			jooq.model.tables.TInsuranceFilingHistory.T_INSURANCE_FILING_HISTORY,
 			jooq.model.tables.TLocation.T_LOCATION,
 			jooq.model.tables.TSalaryCalculationConfig.T_SALARY_CALCULATION_CONFIG,
 			jooq.model.tables.TSalaryConfig.T_SALARY_CONFIG,

@@ -3,6 +3,7 @@ import enhance.SupplementaryHouseFund;
 import enhance.SupplementaryInsurances;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.CellRangeAddressList;
 import org.apache.poi.xssf.usermodel.*;
 
@@ -79,11 +80,35 @@ public class POI
             RichTextString str = factory.createRichTextString("Hello, World!");
             comment.setString(str);
             cell.setCellComment(comment);
-
-
-
             cell.setCellValue(name);
         }
+
+        CellRangeAddress cra = new CellRangeAddress(2,5,7,10);
+        sheet.addMergedRegion(cra);
+        XSSFRow row = sheet.createRow(2);
+        XSSFCell cell = row.createCell(7);
+        cell.setCellValue("woshiwangmo \n nihao");
+
+
+
+
+//        CellRangeAddress cra=new CellRangeAddress(0, 3, 3, 9);
+//
+//        在sheet里增加合并单元格
+//        sheet.addMergedRegion(cra);
+//
+//        Row row = sheet.createRow(0);
+//
+//        Cell cell_1 = row.createCell(3);
+//
+//        cell_1.setCellValue("When you're right , no one remembers, when you're wrong ,no one forgets .");
+//
+//        cell 位置3-9被合并成一个单元格，不管你怎样创建第4个cell还是第5个cell…然后在写数据。都是无法写入的。
+//        Cell cell_2 = row.createCell(10);
+//
+//        cell_2.setCellValue("what's up ! ");
+
+
         XSSFName name = workbook.createName();
         name.setNameName("hidden");
         name.setRefersToFormula("hidden!$A$1:$A$" + dropdownlist.length);
@@ -94,11 +119,7 @@ public class POI
         validation.setSuppressDropDownArrow(true);
         validation.setShowErrorBox(true);
         sheet.addValidationData(validation);
-//        workbook.setSheetHidden(1, true);
         hidden.autoSizeColumn((short)0); //调整第一列宽度
-//        hidden.autoSizeColumn((short)1); //调整第二列宽度
-//        hidden.autoSizeColumn((short)2); //调整第三列宽度
-//        hidden.autoSizeColumn((short)3); //调整第四列宽度
         FileOutputStream fileOut;
         try {
             fileOut = new FileOutputStream("/Users/haizhi/Desktop/workbook.xls");
