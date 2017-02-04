@@ -22,12 +22,10 @@ public class InsuranceFile {
     @Indexed
     private String mobile;
 
-    @Transient
     private Long tenantId;
 
     private Long userId;
 
-    @Transient
     private Integer time;
 
     private String name;

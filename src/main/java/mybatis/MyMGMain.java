@@ -5,6 +5,8 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.google.inject.name.Names;
+import org.mybatis.guice.MyBatisModule;
+import org.mybatis.guice.datasource.builtin.PooledDataSourceProvider;
 import org.mybatis.guice.datasource.helper.JdbcHelper;
 
 import java.util.Properties;
@@ -24,11 +26,20 @@ public class MyMGMain {
         myBatisProperties.setProperty("JDBC.autoCommit", "false");
 
         Injector injector = Guice.createInjector(
-                JdbcHelper.HSQLDB_Embedded,
-                new Module() {
-                    public void configure(Binder binder) {
-                        Names.bindProperties(binder, myBatisProperties);
+                new MyBatisModule() {
+
+                    @Override
+                    protected void initialize() {
+                        install(JdbcHelper.HSQLDB_Embedded);
+
+                        bindDataSourceProviderType(PooledDataSourceProvider.class);
+//                        bindTransactionFactoryType(JdbcTransactionFactory.class);
+//                        addMapperClass(UserMapper.class);
+
+//                        Names.bindProperties(binder, createTestProperties());
+//                        bind(FooService.class).to(FooServiceMapperImpl.class);
                     }
+
                 }
         );
     }

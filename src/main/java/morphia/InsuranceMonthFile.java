@@ -11,7 +11,7 @@ import java.util.List;
  */
 @Data
 @Entity
-@Indexes({@Index(value = "tenantId,time")})
+@Indexes({@Index(value = "tenantId,time" ,options = @IndexOptions(unique = true))})
 public class InsuranceMonthFile {
 
     @Id

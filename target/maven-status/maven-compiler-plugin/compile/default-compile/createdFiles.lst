@@ -31,6 +31,7 @@ http/HttpUtil$1.class
 jooq/model/tables/TInsuranceFilingHistory.class
 json/model/BaseDataVO.class
 json/model/CitiesVO.class
+mybatis/dao/model/HouseFundPlanExample$Criterion.class
 enhance/ServiceBeanFactory.class
 patterns/Service1.class
 jooq/model/tables/records/TSupplementaryInsurancesRecord.class
@@ -48,6 +49,7 @@ jooq/model/tables/TSalaryConfig.class
 jersey/client/TestClient.class
 http/MyHostnameVerifier.class
 jooq/model/tables/THousefundPlan.class
+mybatis/dao/model/HouseFundPlanExample$GeneratedCriteria.class
 jooq/model/tables/records/THousefundPlanRecord.class
 enhance/RealSubject.class
 morphia/BigDecimalToStr.class
@@ -63,7 +65,9 @@ jersey/service/UserService.class
 algorithms/Solution.class
 rabbitmq/NewTask.class
 specification/Test.class
+mybatis/dao/model/HouseFundPlan.class
 jooq/model/OaSalary.class
+mybatis/dao/model/HouseFundPlanExample$Criteria.class
 algorithms/Solution$Pair.class
 json/model/InsurancesBaseDataVO.class
 jooq/model/tables/records/TBasicSalaryRecord.class
@@ -116,6 +120,7 @@ patterns/ServiceLocatorPatternDemo.class
 jooq/model/tables/records/TInsuranceFilingHistoryRecord.class
 jooq/model/Tables.class
 morphia/Salary.class
+mybatis/dao/model/HouseFundPlanExample.class
 rabbitmq/RPCClient.class
 jedis/TestJedis.class
 main/Main.class
@@ -143,6 +148,7 @@ jooq/model/tables/records/TCurrentSalaryRecord.class
 enhance/DynamicProxyExample.class
 injection/Service.class
 jooq/model/tables/records/TAttendanceDataRecord.class
+mybatis/mapper/HouseFundPlanMapper.class
 jooq/model/tables/TInsurancesHousefundConfig.class
 jooq/model/tables/TBasicSalaryAdjustment.class
 morphia/ToLowerCaseHelper.class

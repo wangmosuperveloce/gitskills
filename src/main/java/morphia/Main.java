@@ -2,10 +2,9 @@ package morphia;
 
 import com.mongodb.*;
 import org.apache.commons.beanutils.BeanUtils;
-import org.bson.types.ObjectId;
-import org.jooq.util.derby.sys.Sys;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
+import org.mongodb.morphia.aggregation.AggregationPipeline;
 import org.mongodb.morphia.aggregation.Projection;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
@@ -13,7 +12,6 @@ import org.mongodb.morphia.query.UpdateOperations;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static org.mongodb.morphia.aggregation.Projection.projection;
@@ -23,10 +21,73 @@ import static org.mongodb.morphia.aggregation.Projection.projection;
  */
 public class Main {
     private static Morphia morphia = new Morphia();
-    private static Datastore datastore = morphia.createDatastore(new MongoClient(), "tests");
+    private static Datastore datastore = morphia.createDatastore(new MongoClient(), "test");
     private static final int singleDocFileNum = 10000;
 
+    public static void main(String[] args) throws Exception{
+        String url = "bad";
+        String[] sed = url.split("\\?");
+        System.out.println(sed.length);
+    }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private static Projection[] projections = new Projection[] {projection("_id").suppress(),
+            projection("mobile", "files.mobile"),
+            projection("name", "files.name"),
+            projection("userId", "files.userId"),
+            projection("joinAt", "files.joinAt"),
+            projection("nationalId", "files.nationalId"),
+            projection("insCity", "files.insCity"),
+            projection("insBase", "files.insBase"),
+            projection("insOrg", "files.insOrg"),
+            projection("insEmp", "files.insEmp"),
+            projection("hfCity", "files.hfCity"),
+            projection("hfBase", "files.hfBase"),
+            projection("hfOrg", "files.hfOrg"),
+            projection("hfEmp", "files.hfEmp"),
+            projection("orgEnd", "files.orgEnd"),
+            projection("empEnd", "files.empEnd"),
+            projection("orgMed", "files.orgMed"),
+            projection("empMed", "files.empMed"),
+            projection("orgUne", "files.orgUne"),
+            projection("empUne", "files.empUne"),
+            projection("orgInj", "files.orgInj"),
+            projection("empInj", "files.empInj"),
+            projection("orgMat", "files.orgMat"),
+            projection("empMat", "files.empMat"),
+            projection("orgIll", "files.orgIll"),
+            projection("empIll", "files.empIll"),
+            projection("suppInsOrg", "files.suppInsOrg"),
+            projection("suppInsEmp", "files.suppInsEmp"),
+            projection("suppHfOrg", "files.suppHfOrg"),
+            projection("suppHfEmp", "files.suppHfEmp"),
+            projection("orgSuppEnd", "files.orgSuppEnd"),
+            projection("empSuppEnd", "files.empSuppEnd"),
+            projection("orgSuppMed", "files.orgSuppMed"),
+            projection("empSuppMed", "files.empSuppMed"),
+            projection("orgSuppUne", "files.orgSuppUne"),
+            projection("empSuppUne", "files.empSuppUne"),
+            projection("orgSuppInj", "files.orgSuppInj"),
+            projection("empSuppInj", "files.empSuppInj"),
+            projection("orgSuppMat", "files.orgSuppMat"),
+            projection("empSuppMat", "files.empSuppMat"),
+            projection("orgSuppIll", "files.orgSuppIll"),
+            projection("empSuppIll", "files.empSuppIll")};
 
     public static <T> T dbObject2Bean(DBObject dbObject, T bean) throws IllegalAccessException,
             InvocationTargetException, NoSuchMethodException {
@@ -43,73 +104,34 @@ public class Main {
         }
         return bean;
     }
-    public static void main(String[] args) throws Exception{
-//        List<InsuranceFile> files = generate(99999);
-//        datastore.save(files);
-//        store(files);
-//        List<InsuranceMonthFile> monthFileList = datastore.createQuery(InsuranceMonthFile.class).asList();
-//        System.out.println(monthFileList.get(0).getFiles().size());
-//        datastore.createQuery(InsuranceMonthFile.class);
-//        List<InsuranceFile> files = datastore.createQuery(InsuranceFile.class).field("userId").equal((long) 2).asList();
-//        System.out.println(files);
-        Iterator<InsuranceFile> aggregate = datastore.createAggregation(InsuranceMonthFile.class)
-                .match(datastore.createQuery(InsuranceMonthFile.class).field("tenantId").equal(1009L))
+
+
+    public static InsuranceMonthFile getMonthFile_SearchName(Long tenantId, int time, Integer offset, Integer limit) {
+        AggregationPipeline pipeline = datastore.createAggregation(InsuranceMonthFile.class)
+                .match(datastore.createQuery(InsuranceMonthFile.class).field("tenantId").equal(tenantId).field("time").equal(time).filter("deleted", 0))
                 .project(Projection.projection("_id").suppress(), Projection.projection("files"))
                 .unwind("files")
-                .project(
-                        projection("_id").suppress(),
-                        projection("mobile", "files.mobile"),
-                        projection("name", "files.name"),
-                        projection("userId", "files.userId"),
-                        projection("joinAt", "files.userId"),
-                        projection("nationalId", "files.nationalId"),
-                        projection("insCity", "files.insCity"),
-                        projection("insBase", "files.insBase"),
-                        projection("insOrg", "files.insOrg"),
-                        projection("insEmp", "files.insEmp"),
-                        projection("hfCity", "files.hfCity"),
-                        projection("hfBase", "files.hfBase"),
-                        projection("hfOrg", "files.hfOrg"),
-                        projection("hfEmp", "files.hfEmp"),
-                        projection("orgEnd", "files.orgEnd"),
-                        projection("empEnd", "files.empEnd"),
-                        projection("orgMed", "files.orgMed"),
-                        projection("empMed", "files.empMed"),
-                        projection("orgUne", "files.orgUne"),
-                        projection("empUne", "files.empUne"),
-                        projection("orgInj", "files.orgInj"),
-                        projection("empInj", "files.empInj"),
-                        projection("orgMat", "files.orgMat"),
-                        projection("empMat", "files.empMat"),
-                        projection("orgIll", "files.orgIll"),
-                        projection("empIll", "files.empIll"),
-                        projection("suppInsOrg", "files.suppInsOrg"),
-                        projection("suppInsEmp", "files.suppInsEmp"),
-                        projection("suppHfOrg", "files.suppHfOrg"),
-                        projection("suppHfEmp", "files.suppHfEmp"),
-                        projection("orgSuppEnd", "files.orgSuppEnd"),
-                        projection("empSuppEnd", "files.empSuppEnd"),
-                        projection("orgSuppMed", "files.orgSuppMed"),
-                        projection("empSuppMed", "files.empSuppMed"),
-                        projection("orgSuppUne", "files.orgSuppUne"),
-                        projection("empSuppUne", "files.empSuppUne"),
-                        projection("orgSuppInj", "files.orgSuppInj"),
-                        projection("empSuppInj", "files.empSuppInj"),
-                        projection("orgSuppMat", "files.orgSuppMat"),
-                        projection("empSuppMat", "files.empSuppMat"),
-                        projection("orgSuppIll", "files.orgSuppIll"),
-                        projection("empSuppIll", "files.empSuppIll")
-                )
-                .match(datastore.createQuery(InsuranceFile.class).field("userId").in(new ArrayList<>()))
-                .skip(0)
-                .limit(10)
-                .aggregate(InsuranceFile.class);
-        while (aggregate.hasNext()) {
-            System.out.println(aggregate.next());
+                .project(projections);
+//                .match(datastore.createQuery(InsuranceFile.class).field("name").contains(name));
+        if (offset != null && limit != null) {
+            pipeline.skip(offset).limit(limit);
         }
+        Iterator<InsuranceFile> fileIterator = pipeline.aggregate(InsuranceFile.class);
+        List<InsuranceFile> files = new ArrayList<>();
+        while (fileIterator.hasNext()) {
+            InsuranceFile file = fileIterator.next();
+            file.setTenantId(tenantId);
+            file.setTime(time);
+            files.add(file);
+        }
+
+        InsuranceMonthFile result = new InsuranceMonthFile();
+        result.setTenantId(tenantId);
+        result.setTime(time);
+        result.setTotal(files.size());
+        result.setFiles(files);
+        return result;
     }
-
-
 
     public static InsuranceMonthFile monthFile(Long tenantId, int time, Integer offset, Integer limit, String name) {
         if (name == null || name.equals("")) {
